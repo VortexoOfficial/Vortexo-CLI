@@ -64,18 +64,12 @@ const DENOM_MENU = [
   { value: 4, label: "100 ETH" },
 ];
 
-// ⚠️ FILL THESE IN with the real deployed VortexoFunZK address for each
-// chain before handing this script to users — these must match
-// CONTRACT_ADDRESSES in src/lib/ethereum.ts exactly. Placeholder/zero
-// addresses are rejected at runtime (see requireRealContract below).
-// relayerUrl is optional — fill it in once you have a relayer/index.js
-// instance running for that chain; users can also type a different one
-// at the prompt.
+
 const CHAIN_CONFIG = [
-  { id: 1, name: "Ethereum Mainnet", contract: "0x0000000000000000000000000000000000000001", relayerUrl: "" },
-  { id: 56, name: "BNB Smart Chain", contract: "0x0000000000000000000000000000000000000002", relayerUrl: "" },
-  { id: 42161, name: "Arbitrum One", contract: "0x0000000000000000000000000000000000000004", relayerUrl: "" },
-  { id: 8453, name: "Base", contract: "0x0000000000000000000000000000000000000006", relayerUrl: "" },
+  { id: 1, name: "Ethereum Mainnet", contract: "0xcf75982da77A13d85919A00aEf290343cada5111", relayerUrl: "" },
+  { id: 56, name: "BNB Smart Chain", contract: "0x871F2479cFFddD0210bD2d7AcC21b44D6f9e4ca6", relayerUrl: "" },
+  { id: 42161, name: "Arbitrum One", contract: "0x833Be2DC319b80365eB53C19932ad2f347c39cD9", relayerUrl: "" },
+  { id: 8453, name: "Base", contract: "0x833Be2DC319b80365eB53C19932ad2f347c39cD9", relayerUrl: "" },
 ];
 
 function requireRealContract(chainName, address) {
@@ -165,13 +159,7 @@ function randomFieldElement() {
   return val % FIELD_SIZE;
 }
 
-// A single persistent 'line' listener, queueing answers that arrive before
-// they're asked for. Using rl.question() repeatedly (one call per prompt)
-// has a real race: if multiple lines arrive in one input chunk (piped
-// input, or a fast paste), readline can emit several 'line' events
-// synchronously before our code has a chance to `await` its way to
-// attaching the next one-shot listener, silently dropping a line. This
-// queue makes prompt order irrelevant to when lines actually arrive.
+
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout, terminal: true });
 const pendingLines = [];
 const pendingResolvers = [];
